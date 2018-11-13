@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AbstractionProvider\AbstractionProvider.csproj" />
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\ExternalDataService\ExternalDataService.csproj" />
     <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj" />
   </ItemGroup>

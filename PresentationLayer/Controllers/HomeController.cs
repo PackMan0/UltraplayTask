@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using AbstractionProvider.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.Models;
 
@@ -6,28 +8,18 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ISportService _sportService;
+
+        public HomeController(ISportService sportService)
         {
-            return View();
+            this._sportService = sportService;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var sport = await this._sportService.GetAllSportDataAsync();
+            
+            return View("Index", sport);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

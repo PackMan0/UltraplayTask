@@ -9,7 +9,7 @@ namespace AbstractionProvider.Models
     {
         public Match()
         {
-            this.Bets = new HashSet<Bet>();
+            this.Bets = new List<Bet>();
         }
 
         [XmlAttribute(AttributeName = "StartDate")]
@@ -19,7 +19,7 @@ namespace AbstractionProvider.Models
         public string MatchType { get; set; }
         
         [XmlElement(ElementName = "Bet")]
-        public ICollection<Bet> Bets { get; set; }
+        public List<Bet> Bets { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -32,7 +32,7 @@ namespace AbstractionProvider.Models
                    base.Equals(other) &&
                    this.StartDate == other.StartDate &&
                    this.MatchType == other.MatchType &&
-                   EqualityComparer<ICollection<Bet>>.Default.Equals(this.Bets, other.Bets);
+                   EqualityComparer<List<Bet>>.Default.Equals(this.Bets, other.Bets);
         }
 
         public static bool operator ==(Match match1, Match match2)

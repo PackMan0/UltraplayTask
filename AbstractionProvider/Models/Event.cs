@@ -9,11 +9,11 @@ namespace AbstractionProvider.Models
     {
         public Event()
         {
-            this.Matches = new HashSet<Match>();
+            this.Matches = new List<Match>();
         }
 
         [XmlElement(ElementName = "Match")]
-        public ICollection<Match> Matches { get; set; }
+        public List<Match> Matches { get; set; }
         
         [XmlAttribute(AttributeName = "IsLive")]
         public bool IsLive { get; set; }
@@ -30,7 +30,7 @@ namespace AbstractionProvider.Models
         {
             return other != null &&
                    base.Equals(other) &&
-                   EqualityComparer<ICollection<Match>>.Default.Equals(this.Matches, other.Matches) &&
+                   EqualityComparer<List<Match>>.Default.Equals(this.Matches, other.Matches) &&
                    this.IsLive == other.IsLive &&
                    this.CategoryID == other.CategoryID;
         }

@@ -1,4 +1,6 @@
 ﻿using AbstractionProvider.Interfaces;
+using AbstractionProvider.Interfaces.Services;
+using BusinessLayer;
 using ExternalDataService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,8 +36,10 @@ namespace WebApp
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddControllersAsServices();
 
-            services.AddTransient<ISportService>( s => new HttpSportService(this.Configuration["SportDataUrl"]));
+            services.AddTransient<IExternalSportService>( s => new HttpSportService(this.Configuration["SportDataUrl"]));
 
+            services.AddTransient<ISportService, SportService>();
+            
             services.AddTransient<HomeController>();
         }
 

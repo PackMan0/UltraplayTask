@@ -4,10 +4,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AbstractionProvider.Models;
 
-namespace AbstractionProvider.Interfaces
+namespace AbstractionProvider.Interfaces.Services
 {
     public interface ISportService
     {
-        Task<Sport> GetSportDataAsync();
+        Task<Sport> GetAllSportDataAsync();
     }
 }

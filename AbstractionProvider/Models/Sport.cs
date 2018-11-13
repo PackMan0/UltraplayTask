@@ -9,11 +9,11 @@ namespace AbstractionProvider.Models
     {
         public Sport()
         {
-            this.Events = new HashSet<Event>();
+            this.Events = new List<Event>();
         }
 
         [XmlElement(ElementName = "Event")]
-        public ICollection<Event> Events { get; set; }
+        public List<Event> Events { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -24,7 +24,7 @@ namespace AbstractionProvider.Models
         {
             return other != null &&
                    base.Equals(other) &&
-                   EqualityComparer<ICollection<Event>>.Default.Equals(this.Events, other.Events);
+                   EqualityComparer<List<Event>>.Default.Equals(this.Events, other.Events);
         }
 
         public static bool operator ==(Sport sport1, Sport sport2)

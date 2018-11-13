@@ -9,11 +9,11 @@ namespace AbstractionProvider.Models
     {
         public Bet()
         {
-            this.Odds = new HashSet<Odd>();
+            this.Odds = new List<Odd>();
         }
 
         [XmlElement(ElementName = "Odd")]
-        public ICollection<Odd> Odds { get; set; }
+        public List<Odd> Odds { get; set; }
         
         [XmlAttribute(AttributeName = "IsLive")]
         public bool IsLive { get; set; }
@@ -27,7 +27,7 @@ namespace AbstractionProvider.Models
         {
             return other != null &&
                    base.Equals(other) &&
-                   EqualityComparer<ICollection<Odd>>.Default.Equals(this.Odds, other.Odds) &&
+                   EqualityComparer<List<Odd>>.Default.Equals(this.Odds, other.Odds) &&
                    this.IsLive == other.IsLive;
         }
 
