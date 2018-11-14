@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace AbstractionProvider.Models
 {
     [XmlRoot(ElementName = "Match")]
-    public class Match : Base, IEquatable<Match>
+    public class Match : Base
     {
         public Match()
         {
@@ -20,29 +20,9 @@ namespace AbstractionProvider.Models
         
         [XmlElement(ElementName = "Bet")]
         public List<Bet> Bets { get; set; }
+        
+        public int EventExtarnalID { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as Match);
-        }
-
-        public bool Equals(Match other)
-        {
-            return other != null &&
-                   base.Equals(other) &&
-                   this.StartDate == other.StartDate &&
-                   this.MatchType == other.MatchType &&
-                   EqualityComparer<List<Bet>>.Default.Equals(this.Bets, other.Bets);
-        }
-
-        public static bool operator ==(Match match1, Match match2)
-        {
-            return EqualityComparer<Match>.Default.Equals(match1, match2);
-        }
-
-        public static bool operator !=(Match match1, Match match2)
-        {
-            return !(match1 == match2);
-        }
+        public Guid EventID { get; set; }
     }
 }

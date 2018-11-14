@@ -1,4 +1,8 @@
-﻿using AbstractionProvider.Interfaces;
+﻿using System;
+using System.Reflection.Metadata;
+using AbstractionProvider;
+using AbstractionProvider.Configurations;
+using AbstractionProvider.Interfaces;
 using AbstractionProvider.Interfaces.Services;
 using BusinessLayer;
 using ExternalDataService;
@@ -36,8 +40,15 @@ namespace WebApp
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddControllersAsServices();
 
-            services.AddTransient<IExternalSportService>( s => new HttpSportService(this.Configuration["SportDataUrl"]));
-
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+            services.Configure<BusinessConfig>(Configuration.GetSection("Constants"));
+            
+            services.AddMemoryCache();
+            services.AddTransient<CacheProvider>();
+            
+            services.AddTransient<IExternalSportService, HttpSportService>();
+            
             services.AddTransient<ISportService, SportService>();
             
             services.AddTransient<HomeController>();

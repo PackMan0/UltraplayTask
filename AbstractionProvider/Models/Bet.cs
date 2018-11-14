@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace AbstractionProvider.Models
 {
     [XmlRoot(ElementName = "Bet")]
-    public class Bet : Base, IEquatable<Bet>
+    public class Bet : Base
     {
         public Bet()
         {
@@ -17,28 +17,9 @@ namespace AbstractionProvider.Models
         
         [XmlAttribute(AttributeName = "IsLive")]
         public bool IsLive { get; set; }
+        
+        public int MatchExternalID { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as Bet);
-        }
-
-        public bool Equals(Bet other)
-        {
-            return other != null &&
-                   base.Equals(other) &&
-                   EqualityComparer<List<Odd>>.Default.Equals(this.Odds, other.Odds) &&
-                   this.IsLive == other.IsLive;
-        }
-
-        public static bool operator ==(Bet bet1, Bet bet2)
-        {
-            return EqualityComparer<Bet>.Default.Equals(bet1, bet2);
-        }
-
-        public static bool operator !=(Bet bet1, Bet bet2)
-        {
-            return !(bet1 == bet2);
-        }
+        public Guid MatchID { get; set; }
     }
 }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace WebApp
 {
@@ -17,8 +12,24 @@ namespace WebApp
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return new WebHostBuilder()
+                   .UseKestrel()
+                   .UseContentRoot(Directory.GetCurrentDirectory())
+                   .ConfigureAppConfiguration((hostingContext, config) =>
+                                              {
+                                                  var env = hostingContext.HostingEnvironment;
+                                                  var businessConfigFilePath = Path.Combine(env.ContentRootPath, "..", "BusinessLayer", "businessConfiguration.json");
+
+                                                  config.AddJsonFile(businessConfigFilePath, optional: true, reloadOnChange: true) // When running using dotnet run
+                                                        .AddJsonFile("businessConfiguration.json", optional: true, reloadOnChange: true) // When app is published
+                                                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                                                  config.AddEnvironmentVariables();
+                                              })
+                   .UseStartup<Startup>();
+        }
     }
 }
