@@ -25,5 +25,7 @@ namespace AbstractionProvider.Models
         public int SportExternaID { get; set; }
         
         public Guid SportID { get; set; }
+
+        public Sport Sport { get; set; }
     }
 }

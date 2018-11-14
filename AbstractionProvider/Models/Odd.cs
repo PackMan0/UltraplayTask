@@ -16,5 +16,7 @@ namespace AbstractionProvider.Models
         public int BetExtarnalID { get; set; }
 
         public Guid BetID { get; set; }
+
+        public Bet Bet { get; set; }
     }
 }

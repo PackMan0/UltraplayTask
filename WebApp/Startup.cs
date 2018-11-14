@@ -5,11 +5,13 @@ using AbstractionProvider.Configurations;
 using AbstractionProvider.Interfaces;
 using AbstractionProvider.Interfaces.Services;
 using BusinessLayer;
+using DataAccessLayer;
 using ExternalDataService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PresentationLayer.Controllers;
@@ -40,10 +42,15 @@ namespace WebApp
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddControllersAsServices();
 
-            // Add functionality to inject IOptions<T>
+            services.AddDbContext<UltraplayTaskDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Can be hide with abstraction implemented in separated Class Library with different methods of getting config settings
+            //For the purpose of the task I don't think that's necessary
             services.AddOptions();
             services.Configure<BusinessConfig>(Configuration.GetSection("Constants"));
-            
+
+            //Can be hide with abstraction implemented in separated Class Library with different methods of caching
+            //For the purpose of the task I don't think that's necessary
             services.AddMemoryCache();
             services.AddTransient<CacheProvider>();
             

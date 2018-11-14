@@ -24,5 +24,7 @@ namespace AbstractionProvider.Models
         public int EventExtarnalID { get; set; }
 
         public Guid EventID { get; set; }
+
+        public Event Event { get; set; }
     }
 }

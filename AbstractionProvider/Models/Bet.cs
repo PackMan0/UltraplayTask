@@ -21,5 +21,7 @@ namespace AbstractionProvider.Models
         public int MatchExternalID { get; set; }
 
         public Guid MatchID { get; set; }
+
+        public Match Match { get; set; }
     }
 }

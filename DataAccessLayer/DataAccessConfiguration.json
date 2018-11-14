@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=.; Initial Catalog=UltraplayTaskDB; Integrated Security=true; Connect Timeout=3600; Encrypt=False; TrustServerCertificate=True; ApplicationIntent=ReadWrite; MultiSubnetFailover=True; MultipleActiveResultSets=True;"
+
+  } 
+  }
