@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AbstractionProvider;
 using AbstractionProvider.Configurations;
+using AbstractionProvider.Interfaces.Repositories;
 using Microsoft.Extensions.Options;
 
 namespace BusinessLayer
@@ -15,18 +16,33 @@ namespace BusinessLayer
         private readonly IExternalSportService _externalSportService;
         private readonly BusinessConfig _config;
         private readonly CacheProvider _cacheProvider;
+        private readonly IRepository _repository;
 
-        public SportService(IExternalSportService externalSportService, IOptions<BusinessConfig> config, CacheProvider cacheProvider)
+        public SportService(IExternalSportService externalSportService, 
+                            IOptions<BusinessConfig> config, 
+                            CacheProvider cacheProvider,
+                            IRepository repository)
         {
             this._externalSportService = externalSportService;
             this._cacheProvider = cacheProvider;
+            this._repository = repository;
             this._config = config.Value;
         }
 
         public async Task<Sport> GetAllSportDataAsync()
         {
             var sportResult = FilterMatches(await this._externalSportService.GetSportDataAsync());
-            this._cacheProvider.Add(sportResult, this._config.SportCacheKey, this._config.SportCahcheExperationTimeInSeconds);
+            var cacheSport = this._cacheProvider.Get<Sport>(this._config.SportCacheKey);
+
+            if (cacheSport == null)
+            {
+                if (this._repository.GetAll<Sport>().Any(s => s.ExternalID == sportResult.ExternalID) == false)
+                {
+                    this._repository.Insert(sportResult);
+                }
+            }
+
+            this._cacheProvider.Add(sportResult, this._config.SportCacheKey);
             
             return sportResult;
         }

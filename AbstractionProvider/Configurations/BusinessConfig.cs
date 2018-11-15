@@ -22,5 +22,7 @@ namespace AbstractionProvider.Configurations
         public string SportCacheKey { get; set; }
 
         public int SportCahcheExperationTimeInSeconds { get; set; }
+        
+        public int UpdateSportDataIntervalInSeconds { get; set; }
     }
 }

@@ -3,46 +3,52 @@
 }
 @model AbstractionProvider.Models.Sport
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    
-    @foreach (var sportEvent in Model.Events) {
-        
-        <ul id="event_@sportEvent.ExternalID" class="list-group">
-            <li class="list-group-item">Event: @sportEvent.Name <span style="background-color: green; color: white;">@(sportEvent.IsLive ? "- LIVE" : "")</span></li>
-            
-            <li class="list-group-item">
-                
-                @foreach (var match in sportEvent.Matches) {
+<div class="">
 
-                    <ul class="list-group" id="match_@match.ExternalID">
-                        <li class="list-group-item">Match Name: @match.Name</li>
-                        <li class="list-group-item">Starts At: @match.StartDate.ToString("G")</li>
-                        <li class="list-group-item">Match type: @match.MatchType</li>
+    @foreach(var sportEvent in Model.Events)
+    {
 
-                        <li class="list-group-item">
+        <div id="event_@sportEvent.ExternalID" class="panel-group col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Event: @sportEvent.Name <span style="background-color: green; color: white;">@(sportEvent.IsLive ? "- LIVE" : "")</span></div>
+                <div class="panel-body">
+                    @foreach(var match in sportEvent.Matches)
+                    {
+                        <div id="match_@match.ExternalID" class="panel-group">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Match Name: @match.Name Match type: @match.MatchType Starts At: @match.StartDate.ToString("G")</div>
+                                <div class="panel-body">
+                                    @foreach(var bet in match.Bets)
+                                    {
 
-                            @foreach (var bet in match.Bets) {
+                                        <div id="bet_@bet.ExternalID" class="panel-group">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Bet Name: @bet.Name <span style="background-color: green; color: white;">@(bet.IsLive ? " - LIVE" : "")</span></div>
+                                                <div class="panel-body">
+                                                    @foreach(var odd in bet.Odds)
+                                                    {
+                                                        <div id="odd_@odd.ExternalID" class="panel-group col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                            <div class="panel panel-primary">
+                                                                <div class="panel-heading">Odd Name: @odd.Name</div>
+                                                                <div class="panel-body">
+                                                                    Value: @odd.Value Special Value: @odd.SpecialBetValue
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
 
-                                <ul class="list-group" id="bet_@bet.ExternalID">
-                                    <li class="list-group-item">Name: @bet.Name <span style="background-color: green; color: white;">@(bet.IsLive ? " - LIVE" : "")</span></li>
+            </div>
+        </div>
 
-                                    <li class="list-group-item">
-                                        <ul class="list-group">
-                                            @foreach (var odd in bet.Odds) {
-                                                <li class="list-group-item" id="odd_@odd.ExternalID">Name: @odd.Name Value: @odd.Value Special Value: @odd.SpecialBetValue</li>
-
-                                            }
-                                        </ul>
-                                    </li>
-                                </ul>
-                            }
-                        </li>
-                    </ul>
-                }
-            </li>
-            
-        </ul>
-        
     }
 
 </div>

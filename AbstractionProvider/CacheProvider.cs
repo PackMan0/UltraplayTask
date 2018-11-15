@@ -17,11 +17,20 @@ namespace AbstractionProvider
             this._memoryCache = memoryCache;
         }
 
-        public void Add<T>(T objInfo, string key, int experationTimeInSeconds)
+        public void Add<T>(T objInfo, string key, int experationTimeInSeconds = 0)
         {
-            this._memoryCache.Set(key,
-                                  objInfo,
-                                  TimeSpan.FromSeconds(experationTimeInSeconds));
+            if (experationTimeInSeconds == 0)
+            {
+                this._memoryCache.Set(key,
+                                      objInfo,
+                                      new MemoryCacheEntryOptions(){Priority = CacheItemPriority.NeverRemove });
+            }
+            else
+            {
+                this._memoryCache.Set(key,
+                                      objInfo,
+                                      TimeSpan.FromSeconds(experationTimeInSeconds));
+            }
         }
         public void Clear(string key)
         {

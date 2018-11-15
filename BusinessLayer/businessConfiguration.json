@@ -4,6 +4,7 @@
     "RefreshDataIntervalInSeconds": 60,
     "GetEventIntervalInSeconds": 86400, // 60 seconds * 24 hours = 86 400 seconds
     "SportCacheKey": "SportCacheKey",
-    "SportCahcheExperationTimeInSeconds": 3600 // 60 seconds * 1 hour = 3600 seconds
+    "SportCahcheExperationTimeInSeconds": 3600, // 60 seconds * 1 hour = 3600 seconds
+    "UpdateSportDataIntervalInSeconds": 60  
   }
 }
