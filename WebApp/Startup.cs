@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using PresentationLayer.Controllers;
 using PeriodicSportService = ExternalDataService.PeriodicSportService;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -38,6 +39,18 @@ namespace WebApp
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddControllersAsServices();
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                                                                      builder =>
+                                                                      {
+                                                                          builder.AllowAnyMethod().AllowAnyHeader()
+                                                                                 .WithOrigins("http://localhost:56171/")
+                                                                                 .AllowCredentials();
+                                                                      }));
+            services.AddSignalR().AddJsonProtocol(options => {
+                                                      options.PayloadSerializerSettings.ContractResolver =
+                                                                          new DefaultContractResolver();
+                                                  });
+
             //Can be hide with abstraction implemented in separated Class Library with different methods of getting config settings
             //For the purpose of the task I don't think that's necessary
             services.AddOptions();
@@ -48,13 +61,13 @@ namespace WebApp
             services.AddMemoryCache();
             services.AddTransient<CacheProvider>();
 
-            services.AddSingleton<IHostedService, PeriodicSportService>();
-
             services.AddDbContext<UltraplayTaskDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IRepository, Repository>();
-            
 
-            
+            services.AddSingleton<IUpdateSportDataService, UpdateSportDataHub>();
+
+            services.AddSingleton<IHostedService, PeriodicSportService>();
+
             services.AddTransient<IExternalSportService, HttpSportService>();
             
             services.AddTransient<ISportService, SportService>();
@@ -77,12 +90,19 @@ namespace WebApp
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseCors("CorsPolicy");
+            app.UseSignalR(routes =>
+                           {
+                               routes.MapHub<UpdateSportDataHub>("/updateSportDataHub");
+                           });
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

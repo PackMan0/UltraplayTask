@@ -15,9 +15,9 @@ namespace PresentationLayer.Controllers
             this._sportService = sportService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var sport = await this._sportService.GetAllSportDataAsync();
+            var sport = this._sportService.GetAllSportDataAsync();
             
             return View("Index", sport);
         }

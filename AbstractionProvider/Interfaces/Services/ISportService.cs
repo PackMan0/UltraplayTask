@@ -8,6 +8,6 @@ namespace AbstractionProvider.Interfaces.Services
 {
     public interface ISportService
     {
-        Task<Sport> GetAllSportDataAsync();
+        Sport GetAllSportDataAsync();
     }
 }
