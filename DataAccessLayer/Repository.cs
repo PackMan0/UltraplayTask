@@ -8,7 +8,7 @@ using AbstractionProvider.Models;
 
 namespace DataAccessLayer
 {
-    public class Repository : IRepository
+    public class Repository : IRepository, IDisposable
     {
         private readonly UltraplayTaskDbContext _context;
 
@@ -20,15 +20,16 @@ namespace DataAccessLayer
         public void Insert<T>(T entity) where T : Base
         {
             this._context.Add(entity);
+        }
 
-            this._context.SaveChanges();
+        public void InsertCollection<T>(T entityCollection) where T : IEnumerable<Base>
+        {
+            this._context.AddRange(entityCollection);
         }
 
         public void Delete<T>(T entity) where T : Base
         {
             this._context.Remove(entity);
-
-            this._context.SaveChanges();
         }
 
         public IQueryable<T> SearchFor<T>(Expression<Func<T, bool>> predicate) where T : Base
@@ -48,6 +49,10 @@ namespace DataAccessLayer
             // Use .Equals() instead
             return this._context.Set<T>().FirstOrDefault(e => e.ID == id);
         }
-        
+
+        public void Dispose()
+        {
+            this._context.SaveChanges();
+        }
     }
 }

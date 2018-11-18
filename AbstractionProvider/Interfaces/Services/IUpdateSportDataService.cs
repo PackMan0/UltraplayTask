@@ -6,5 +6,7 @@ namespace AbstractionProvider.Interfaces.Services
     public interface IUpdateSportDataService 
     {
         Task DeleteSportData(Sport oldSporData, Sport newSportData);
+
+        Task AddSportData(Sport oldSporData, Sport newSportData);
     }
 }

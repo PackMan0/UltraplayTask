@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{D98B96C1-7667-401B-A411-2EEBEC3EAE7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{D98B96C1-7667-401B-A411-2EEBEC3EAE7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{F5A76473-894C-437B-83EA-3BD71F17D55E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{F5A76473-894C-437B-83EA-3BD71F17D55E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractionProvider", "AbstractionProvider\AbstractionProvider.csproj", "{576AC06C-4D0B-4D5D-98F4-9E10A65F36C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractionProvider", "AbstractionProvider\AbstractionProvider.csproj", "{576AC06C-4D0B-4D5D-98F4-9E10A65F36C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{C884799E-3327-41FD-B5B8-883C4AA344DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{C884799E-3327-41FD-B5B8-883C4AA344DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{BF48F664-F321-4885-8905-E6464DD35123}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{BF48F664-F321-4885-8905-E6464DD35123}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalDataService", "ExternalDataService\ExternalDataService.csproj", "{C5D41AA9-E5E9-4850-B760-ECE05E82F8DA}"
 EndProject

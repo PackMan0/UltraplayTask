@@ -14,6 +14,7 @@ namespace WebApp
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
+
             return new WebHostBuilder()
                    .UseKestrel()
                    .UseContentRoot(Directory.GetCurrentDirectory())

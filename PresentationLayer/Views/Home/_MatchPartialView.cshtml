@@ -1,0 +1,14 @@
+﻿@model AbstractionProvider.Models.Match
+
+<div id="match_@Model.ExternalID" class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Match Name: @Model.Name Match type: @Model.MatchType Starts At: @Model.StartDate.ToString("G")</div>
+        <div class="panel-body">
+            @foreach (var bet in Model.Bets)
+            {
+
+                Html.RenderPartial("_BetPartialView", bet);
+            }
+        </div>
+    </div>
+</div>

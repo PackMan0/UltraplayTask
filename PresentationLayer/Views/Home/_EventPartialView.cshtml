@@ -1,0 +1,16 @@
+﻿@model AbstractionProvider.Models.Event
+
+<div id="event_@Model.ExternalID" class="panel-group col-lg-3 col-md-3 col-sm-4 col-xs-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Event: @Model.Name <span style="background-color: green; color: white;">@(Model.IsLive ? "- LIVE" : "")</span>
+        </div>
+        <div class="panel-body">
+            @foreach (var match in Model.Matches)
+            {
+                Html.RenderPartial("_MatchPartialView", match);
+            }
+        </div>
+
+    </div>
+</div>

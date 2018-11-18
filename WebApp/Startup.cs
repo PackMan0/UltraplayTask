@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using PresentationLayer;
 using PresentationLayer.Controllers;
 using PeriodicSportService = ExternalDataService.PeriodicSportService;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -38,12 +39,12 @@ namespace WebApp
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddControllersAsServices();
-
+            
             services.AddCors(options => options.AddPolicy("CorsPolicy",
                                                                       builder =>
                                                                       {
                                                                           builder.AllowAnyMethod().AllowAnyHeader()
-                                                                                 .WithOrigins("http://localhost:56171/")
+                                                                                 .WithOrigins(Configuration.GetSection("AppURL").Value)
                                                                                  .AllowCredentials();
                                                                       }));
             services.AddSignalR().AddJsonProtocol(options => {
@@ -64,14 +65,15 @@ namespace WebApp
             services.AddDbContext<UltraplayTaskDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IRepository, Repository>();
 
-            services.AddSingleton<IUpdateSportDataService, UpdateSportDataHub>();
+            services.AddTransient<IUpdateSportDataService, UpdateSportDataHub>();
 
             services.AddSingleton<IHostedService, PeriodicSportService>();
 
             services.AddTransient<IExternalSportService, HttpSportService>();
             
             services.AddTransient<ISportService, SportService>();
-            
+
+            services.AddTransient<ViewRenderer>();
             services.AddTransient<HomeController>();
         }
 
@@ -93,7 +95,7 @@ namespace WebApp
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
                            {
-                               routes.MapHub<UpdateSportDataHub>("/updateSportDataHub");
+                               routes.MapHub<UpdateSportDataHub>(Configuration.GetSection("HubUrl").Value);
                            });
             
             app.UseMvc(routes =>

@@ -1,57 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 @model AbstractionProvider.Models.Sport
 
-<div class="">
+<div id="sport_@Model.ExternalID"  class="panel-group">
 
-    @foreach(var sportEvent in Model.Events)
-    {
-
-        <div id="event_@sportEvent.ExternalID" class="panel-group col-lg-3 col-md-3 col-sm-4 col-xs-6">
+    @{
+        if (Model?.Events != null)
+        {
             <div class="panel panel-primary">
-                <div class="panel-heading">Event: @sportEvent.Name <span style="background-color: green; color: white;">@(sportEvent.IsLive ? "- LIVE" : "")</span></div>
+                <div class="panel-heading">
+                    Sport Name: @Model.Name
+                </div>
                 <div class="panel-body">
-                    @foreach(var match in sportEvent.Matches)
+                    @foreach (var sportEvent in Model.Events)
                     {
-                        <div id="match_@match.ExternalID" class="panel-group">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Match Name: @match.Name Match type: @match.MatchType Starts At: @match.StartDate.ToString("G")</div>
-                                <div class="panel-body">
-                                    @foreach(var bet in match.Bets)
-                                    {
 
-                                        <div id="bet_@bet.ExternalID" class="panel-group">
-                                            <div class="panel panel-primary">
-                                                <div class="panel-heading">Bet Name: @bet.Name <span style="background-color: green; color: white;">@(bet.IsLive ? " - LIVE" : "")</span></div>
-                                                <div class="panel-body">
-                                                    @foreach(var odd in bet.Odds)
-                                                    {
-                                                        <div id="odd_@odd.ExternalID" class="panel-group col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                                            <div class="panel panel-primary">
-                                                                <div class="panel-heading">Odd Name: @odd.Name</div>
-                                                                <div class="panel-body">
-                                                                    Value: @odd.Value Special Value: @odd.SpecialBetValue
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                    Html.RenderPartial("_EventPartialView", sportEvent);
+
                     }
                 </div>
 
             </div>
-        </div>
+        }
+        else
+        {
+                <h1>This request was done before initializing the application's cache. Please refresh the page.</h1>
+        }
 
     }
-    
-    
+
 </div>
 
 

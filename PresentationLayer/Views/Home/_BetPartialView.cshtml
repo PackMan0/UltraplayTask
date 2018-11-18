@@ -1,0 +1,15 @@
+﻿@model AbstractionProvider.Models.Bet
+
+<div id="bet_@Model.ExternalID" class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Bet Name: @Model.Name <span style="background-color: green; color: white;">@(Model.IsLive ? " - LIVE" : "")</span>
+        </div>
+        <div class="panel-body">
+            @foreach (var odd in Model.Odds)
+            {
+                Html.RenderPartial("_OddPartialView", odd);
+            }
+        </div>
+    </div>
+</div>

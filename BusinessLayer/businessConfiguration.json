@@ -1,10 +1,21 @@
 {
   "Constants": {
     "SportDataUrl": "https://sports.ultraplay.net/sportsxml?clientKey=b4dde172-4e11-43e4-b290-abdeb0ffd711&sportId=1165",
+    "GetMatchesIntervalStart": "", // Empty String -> DateTime.UtcNow(); Format "2012-03-19T07:22Z" -> specific time
     "RefreshDataIntervalInSeconds": 60,
     "GetEventIntervalInSeconds": 86400, // 60 seconds * 24 hours = 86 400 seconds
     "SportCacheKey": "SportCacheKey",
     "SportCahcheExperationTimeInSeconds": 3600, // 60 seconds * 1 hour = 3600 seconds
-    "UpdateSportDataIntervalInSeconds": 60  
+    "UpdateSportDataIntervalInSeconds": 60,
+    "NewEventCollectionCacheKey": "NewEventCollectionCacheKey",
+    "NewMatchCollectionCacheKey": "NewMatchCollectionCacheKey",
+    "NewBetCollectionCacheKey": "NewBetCollectionCacheKey",
+    "NewOddCollectionCacheKey": "NewOddCollectionCacheKey",
+    "NewColectionExperationTimeInSeconds": 60,
+    "DeleteMatchesMethodName": "DeleteMatchesMethodName",
+    "AddNewEventsMethodName": "AddNewEventsMethodName",
+    "AddNewMatchesMethodName": "AddNewMatchesMethodName",
+    "AddNewBetsMethodName": "AddNewBetsMethodName",
+    "AddNewOddsMethodName": "AddNewOddsMethodName"
   }
 }

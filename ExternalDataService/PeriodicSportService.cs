@@ -49,17 +49,18 @@ namespace ExternalDataService
                 {
 
 
-                    if(oldSportData != null)
+                    if (oldSportData != null)
                     {
 
                         await this._updateSportDataService.DeleteSportData(oldSportData, newSportData);
+                        await this._updateSportDataService.AddSportData(oldSportData, newSportData);
                     }
                     else
+                    { 
+                    /*if(this._repository.GetAll<Sport>().Any(s => s.ExternalID == sportResult.ExternalID) == false)
                     {
-                        /*if(this._repository.GetAll<Sport>().Any(s => s.ExternalID == sportResult.ExternalID) == false)
-                        {
-                            this._repository.Insert(sportResult);
-                        }*/
+                        this._repository.Insert(sportResult);
+                    }*/
                     }
                 }
                 catch(Exception e)
