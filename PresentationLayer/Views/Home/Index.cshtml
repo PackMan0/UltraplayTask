@@ -3,29 +3,31 @@
 }
 @model AbstractionProvider.Models.Sport
 
-<div id="sport_@Model.ExternalID"  class="panel-group">
+<div>
 
     @{
-        if (Model?.Events != null)
+        if(Model?.Events != null)
         {
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Sport Name: @Model.Name
+            <div id="sport_@Model.ExternalID" class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Sport Name: @Model.Name
+                    </div>
+                    <div class="panel-body">
+                        @foreach(var sportEvent in Model.Events)
+                        {
+
+                            Html.RenderPartial("_EventPartialView", sportEvent);
+
+                        }
+                    </div>
+
                 </div>
-                <div class="panel-body">
-                    @foreach (var sportEvent in Model.Events)
-                    {
-
-                    Html.RenderPartial("_EventPartialView", sportEvent);
-
-                    }
-                </div>
-
             </div>
         }
         else
         {
-                <h1>This request was done before initializing the application's cache. Please refresh the page.</h1>
+            <h1>This request was done before initializing the application's cache. Please refresh the page.</h1>
         }
 
     }
