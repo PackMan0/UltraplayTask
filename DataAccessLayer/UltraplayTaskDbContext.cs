@@ -75,5 +75,11 @@ namespace DataAccessLayer
                         .HasPrincipalKey(betEntity => betEntity.ID);
 
         }
+
+        public override void Dispose()
+        {
+            this.SaveChanges();
+            base.Dispose();
+        }
     }
 }

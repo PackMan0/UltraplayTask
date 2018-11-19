@@ -19,5 +19,7 @@ namespace AbstractionProvider.Interfaces.Repositories
         IQueryable<T> GetAll<T>() where T : Base;
 
         T GetById<T>(Guid id) where T : Base;
+
+        int SaveChanges();
     }
 }

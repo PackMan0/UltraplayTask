@@ -5,12 +5,12 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using AbstractionProvider;
+using AbstractionProvider.Interfaces.Providers;
 using AbstractionProvider.Interfaces.Services;
 using AbstractionProvider.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Options;
 using PresentationLayer.Models;
 
 namespace PresentationLayer.Controllers
@@ -18,10 +18,10 @@ namespace PresentationLayer.Controllers
     public class HomeController : Controller
     {
         private readonly ISportService _sportService;
-        private readonly CacheProvider _cacheProvider;
+        private readonly ICacheProvider _cacheProvider;
         private readonly ViewRenderer _viewRenderer;
 
-        public HomeController(ISportService sportService, CacheProvider cacheProvider, ViewRenderer viewRenderer)
+        public HomeController(ISportService sportService, ICacheProvider cacheProvider, ViewRenderer viewRenderer)
         {
             this._sportService = sportService;
             this._cacheProvider = cacheProvider;

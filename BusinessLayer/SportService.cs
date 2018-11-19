@@ -2,10 +2,10 @@
 using AbstractionProvider.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AbstractionProvider;
 using AbstractionProvider.Configurations;
+using AbstractionProvider.Interfaces.Providers;
 using AbstractionProvider.Interfaces.Repositories;
 using Microsoft.Extensions.Options;
 
@@ -13,19 +13,13 @@ namespace BusinessLayer
 {
     public class SportService : ISportService
     {
-        private readonly IExternalSportService _externalSportService;
         private readonly BusinessConfig _config;
-        private readonly CacheProvider _cacheProvider;
-        private readonly IRepository _repository;
+        private readonly ICacheProvider _cacheProvider;
 
-        public SportService(IExternalSportService externalSportService, 
-                            IOptions<BusinessConfig> config, 
-                            CacheProvider cacheProvider,
-                            IRepository repository)
+        public SportService(IOptions<BusinessConfig> config, 
+                            ICacheProvider cacheProvider)
         {
-            this._externalSportService = externalSportService;
             this._cacheProvider = cacheProvider;
-            this._repository = repository;
             this._config = config.Value;
         }
 

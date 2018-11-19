@@ -21,10 +21,24 @@ namespace AbstractionProvider.Models
 
         public bool Equals(Base other)
         {
-            return other != null &&
-                   this.ID.Equals(other.ID) &&
-                   this.ExternalID == other.ExternalID &&
-                   this.Name == other.Name;
+            if (other == null) return false;
+            
+            var defoultGuid = new Guid();
+            
+            if (other.ID == defoultGuid || this.ID == defoultGuid)
+            {
+
+                return this.ExternalID == other.ExternalID &&
+                       this.Name == other.Name;
+            }
+            else
+            {
+
+                return this.ID.Equals(other.ID) &&
+                       this.ExternalID == other.ExternalID &&
+                       this.Name == other.Name;
+            }
+
         }
 
         public static bool operator ==(Base base1, Base base2)

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using AbstractionProvider.Configurations;
+using AbstractionProvider.Interfaces.Providers;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Options;
 
-namespace AbstractionProvider
+namespace WebApp
 {
-    public class CacheProvider
+    public class CacheProvider : ICacheProvider
     {
         private readonly IMemoryCache _memoryCache;
 

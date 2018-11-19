@@ -3,6 +3,7 @@ using System.Reflection.Metadata;
 using AbstractionProvider;
 using AbstractionProvider.Configurations;
 using AbstractionProvider.Interfaces;
+using AbstractionProvider.Interfaces.Providers;
 using AbstractionProvider.Interfaces.Repositories;
 using AbstractionProvider.Interfaces.Services;
 using BusinessLayer;
@@ -51,16 +52,14 @@ namespace WebApp
                                                       options.PayloadSerializerSettings.ContractResolver =
                                                                           new DefaultContractResolver();
                                                   });
-
-            //Can be hide with abstraction implemented in separated Class Library with different methods of getting config settings
-            //For the purpose of the task I don't think that's necessary
+            
             services.AddOptions();
             services.Configure<BusinessConfig>(Configuration.GetSection("Constants"));
             
             //Can be hide with abstraction implemented in separated Class Library with different methods of caching
             //For the purpose of the task I don't think that's necessary
             services.AddMemoryCache();
-            services.AddTransient<CacheProvider>();
+            services.AddTransient<ICacheProvider, CacheProvider>();
 
             services.AddDbContext<UltraplayTaskDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IRepository, Repository>();

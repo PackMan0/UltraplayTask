@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AbstractionProvider;
 using AbstractionProvider.Configurations;
+using AbstractionProvider.Interfaces.Providers;
 using AbstractionProvider.Interfaces.Repositories;
 using AbstractionProvider.Interfaces.Services;
 using AbstractionProvider.Models;
@@ -21,12 +22,12 @@ namespace ExternalDataService
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly BusinessConfig _businessConfig;
         private readonly IExternalSportService _externalSportService;
-        private readonly CacheProvider _cacheProvider;
+        private readonly ICacheProvider _cacheProvider;
         private readonly IUpdateSportDataService _updateSportDataService;
 
         public PeriodicSportService(IOptions<BusinessConfig> settings,
                                     IExternalSportService externalSportService,
-                                    CacheProvider cacheProvider,
+                                    ICacheProvider cacheProvider,
                                     IUpdateSportDataService updateSportDataService)
         {
             this._externalSportService = externalSportService;
@@ -47,21 +48,12 @@ namespace ExternalDataService
 
                 try
                 {
-
-
                     if (oldSportData != null)
                     {
-
                         await this._updateSportDataService.DeleteSportData(oldSportData, newSportData);
-                        await this._updateSportDataService.AddSportData(oldSportData, newSportData);
                     }
-                    else
-                    { 
-                    /*if(this._repository.GetAll<Sport>().Any(s => s.ExternalID == sportResult.ExternalID) == false)
-                    {
-                        this._repository.Insert(sportResult);
-                    }*/
-                    }
+                    
+                    await this._updateSportDataService.AddSportData(oldSportData, newSportData);
                 }
                 catch(Exception e)
                 {
@@ -70,7 +62,7 @@ namespace ExternalDataService
                 
                 this._cacheProvider.Add(newSportData, this._businessConfig.SportCacheKey);
 
-                await Task.Delay(this._businessConfig.UpdateSportDataIntervalInSeconds * 100, stoppingToken);
+                await Task.Delay(this._businessConfig.UpdateSportDataIntervalInSeconds * 1000, stoppingToken);
             }
         }
 

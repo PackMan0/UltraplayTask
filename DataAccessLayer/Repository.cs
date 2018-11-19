@@ -19,12 +19,18 @@ namespace DataAccessLayer
 
         public void Insert<T>(T entity) where T : Base
         {
-            this._context.Add(entity);
+            if (this._context.Set<T>().Any(e => e.ExternalID == entity.ExternalID) == false)
+            {
+                this._context.Set<T>().Add(entity);
+            }
         }
 
         public void InsertCollection<T>(T entityCollection) where T : IEnumerable<Base>
         {
-            this._context.AddRange(entityCollection);
+            foreach (var entity in entityCollection)
+            {
+                this.Insert(entity);
+            }
         }
 
         public void Delete<T>(T entity) where T : Base
@@ -48,6 +54,11 @@ namespace DataAccessLayer
             // 'The Mapping of Interface Member is not supported'
             // Use .Equals() instead
             return this._context.Set<T>().FirstOrDefault(e => e.ID == id);
+        }
+
+        public int SaveChanges()
+        {
+            return this._context.SaveChanges();
         }
 
         public void Dispose()
